@@ -1,0 +1,96 @@
+.home { padding-top: 72px; }
+
+/* ── Hero ── */
+.hero {
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px;
+  min-height: 88vh; padding: 80px 0;
+}
+.hero > * { position: relative; z-index: 1; }
+.hero > .container { padding-left: 24px; padding-right: 0; max-width: none; width: 50%; margin: 0 auto 0 max(24px, calc((100vw - 1200px)/2)); }
+.hero__bg { position: absolute; inset: 0; z-index: 0; }
+.hero__blob {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: .18;
+}
+.hero__blob--1 { width: 600px; height: 600px; background: var(--primary); top: -200px; right: -100px; }
+.hero__blob--2 { width: 400px; height: 400px; background: var(--accent);  bottom: -100px; left: 200px; }
+
+.hero__title {
+  font-size: clamp(32px, 4vw, 52px); font-weight: 800; line-height: 1.15;
+  margin: 16px 0 20px; letter-spacing: -.5px;
+}
+.hero__title--accent {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero__desc { font-size: 17px; color: var(--text-muted); max-width: 480px; margin-bottom: 36px; }
+.hero__actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* ── House card ── */
+.hero__visual {
+  display: flex; justify-content: center; align-items: center;
+  padding-right: max(24px, calc((100vw - 1200px)/2));
+}
+.house-card {
+  background: var(--surface); border-radius: 20px; box-shadow: var(--shadow-lg);
+  padding: 32px; width: 280px; position: relative; border: 1px solid var(--border);
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+.house-card__img { font-size: 80px; text-align: center; display: block; margin-bottom: 20px; }
+.house-card__label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+.house-card__price { font-size: 28px; font-weight: 800; color: var(--primary); margin: 4px 0 16px; }
+.house-card__tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.house-card__tags span {
+  padding: 4px 10px; background: #ede9fe; color: var(--primary);
+  border-radius: 99px; font-size: 12px; font-weight: 600;
+}
+.house-card__badge {
+  position: absolute; top: -12px; right: 20px;
+  background: var(--success); color: #fff;
+  padding: 4px 14px; border-radius: 99px; font-size: 12px; font-weight: 700;
+}
+
+/* ── Stats bar ── */
+.stat-item { padding: 24px; text-align: center; }
+.stat-item__value { display: block; font-size: 32px; font-weight: 800; color: var(--primary); }
+.stat-item__label { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px; display: block; }
+
+/* ── Section header ── */
+.section-header { text-align: center; max-width: 560px; margin: 0 auto; }
+.section-title { font-size: clamp(24px, 3vw, 36px); font-weight: 800; margin: 12px 0 16px; }
+.section-sub { color: var(--text-muted); font-size: 16px; }
+
+/* ── Feature cards ── */
+.feature-card { padding: 28px 24px; }
+.feature-card__icon { font-size: 36px; margin-bottom: 16px; display: block; }
+.feature-card__title { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+.feature-card__desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+/* ── CTA ── */
+.cta__inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  padding: 40px 48px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  border: none;
+}
+.cta__title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.cta__sub   { color: rgba(255,255,255,.75); font-size: 15px; }
+.cta__inner .btn-primary {
+  background: #fff; color: var(--primary); box-shadow: none; white-space: nowrap;
+}
+.cta__inner .btn-primary:hover { background: #ede9fe; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; padding: 60px 0 40px; }
+  .hero > .container { width: 100%; padding: 0 24px; }
+  .hero__visual { padding-right: 24px; }
+  .cta__inner { flex-direction: column; text-align: center; padding: 32px 24px; }
+}
+@media (max-width: 600px) {
+  .hero__actions { flex-direction: column; }
+  .hero__actions .btn { width: 100%; justify-content: center; }
+}

@@ -1,0 +1,43 @@
+.perf-page { min-height: 100vh; padding-bottom: 80px; }
+
+.metric-card { padding: 28px 24px; text-align: center; }
+.metric-card__icon  { font-size: 32px; display: block; margin-bottom: 12px; }
+.metric-card__label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .6px; }
+.metric-card__value { font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+.metric-card__desc  { font-size: 12px; color: var(--text-muted); }
+
+.intercept-card {
+  padding: 28px 32px; display: flex; align-items: center; gap: 24px;
+}
+.intercept-card__icon { font-size: 40px; }
+
+.loading-ring {
+  width: 48px; height: 48px; border: 4px solid var(--border);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin .8s linear infinite; margin: 0 auto;
+}
+
+/* ── Coefficients table ── */
+.coef-table { width: 100%; border-collapse: collapse; }
+.coef-table th {
+  background: var(--bg); padding: 14px 20px; text-align: left;
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .5px;
+  border-bottom: 1px solid var(--border);
+}
+.coef-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.coef-table tr:last-child td { border-bottom: none; }
+.coef-table tr:hover td { background: var(--bg); }
+.coef-table__num  { color: var(--text-muted); font-size: 13px; width: 40px; }
+.coef-table__feat { font-weight: 600; }
+.coef-table__val  { font-weight: 700; font-family: monospace; font-size: 14px; }
+
+.coef-bar-wrap { background: var(--border); border-radius: 99px; height: 8px; width: 160px; overflow: hidden; }
+.coef-bar      { height: 100%; border-radius: 99px; transition: width .4s ease; }
+
+.form-section__title { font-size: 16px; font-weight: 700; }
+
+@media (max-width: 600px) {
+  .coef-bar-wrap { width: 80px; }
+  .coef-table th:last-child, .coef-table td:last-child { display: none; }
+}

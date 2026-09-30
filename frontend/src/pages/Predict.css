@@ -1,0 +1,55 @@
+.predict-page { min-height: 100vh; padding-bottom: 80px; }
+
+.predict-header { text-align: center; margin-bottom: 36px; }
+
+.api-error {
+  background: #fef2f2; border: 1px solid #fecaca; color: var(--danger);
+  padding: 14px 18px; border-radius: var(--radius-sm); margin-bottom: 24px;
+  font-size: 14px; font-weight: 500;
+}
+
+.predict-form { padding: 40px; display: flex; flex-direction: column; gap: 36px; }
+
+.form-section__title {
+  font-size: 16px; font-weight: 700; color: var(--text);
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.furnish-group { display: flex; gap: 12px; flex-wrap: wrap; }
+.furnish-btn {
+  flex: 1; min-width: 120px; padding: 14px 12px; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); background: var(--bg); font-size: 14px;
+  font-weight: 600; cursor: pointer; transition: all .18s; color: var(--text-muted);
+}
+.furnish-btn:hover { border-color: var(--primary); color: var(--primary); }
+.furnish-btn--active { border-color: var(--primary); background: #ede9fe; color: var(--primary); }
+
+.error-border { border-color: var(--danger) !important; }
+
+/* ── Result card ── */
+.result-card { padding: 40px; }
+.result-card__header { text-align: center; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.result-card__icon  { font-size: 56px; display: block; margin-bottom: 12px; }
+.result-card__label { font-size: 14px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+.result-card__price {
+  font-size: clamp(32px, 5vw, 52px); font-weight: 800; margin-top: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.result-card__summary { margin-top: 28px; }
+.result-card__summary h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+
+.summary-item {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.summary-item__key { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+.summary-item__val { font-size: 15px; font-weight: 700; color: var(--text); }
+
+@media (max-width: 600px) {
+  .predict-form { padding: 24px 16px; }
+  .result-card  { padding: 24px 16px; }
+}
