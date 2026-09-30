@@ -1,55 +1,89 @@
 .predict-page { min-height: 100vh; padding-bottom: 80px; }
 
-.predict-header { text-align: center; margin-bottom: 36px; }
+.predict-header { text-align: center; margin-bottom: 32px; }
 
+/* ── API error banner ── */
 .api-error {
   background: #fef2f2; border: 1px solid #fecaca; color: var(--danger);
   padding: 14px 18px; border-radius: var(--radius-sm); margin-bottom: 24px;
-  font-size: 14px; font-weight: 500;
+  font-size: 14px; font-weight: 500; line-height: 1.5;
 }
 
-.predict-form { padding: 40px; display: flex; flex-direction: column; gap: 36px; }
+/* ── Form card ── */
+.predict-form {
+  padding: 36px 40px;
+  display: flex; flex-direction: column; gap: 32px;
+}
 
 .form-section__title {
-  font-size: 16px; font-weight: 700; color: var(--text);
-  margin-bottom: 20px; padding-bottom: 12px;
+  font-size: 15px; font-weight: 700; color: var(--text);
+  margin-bottom: 18px; padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
-.furnish-group { display: flex; gap: 12px; flex-wrap: wrap; }
+/* ── Furnishing buttons ── */
+.furnish-group { display: flex; gap: 10px; flex-wrap: wrap; }
 .furnish-btn {
-  flex: 1; min-width: 120px; padding: 14px 12px; border-radius: var(--radius-sm);
-  border: 2px solid var(--border); background: var(--bg); font-size: 14px;
-  font-weight: 600; cursor: pointer; transition: all .18s; color: var(--text-muted);
+  flex: 1; min-width: 110px; padding: 13px 10px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border); background: var(--bg);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all .18s; color: var(--text-muted);
+  text-align: center;
 }
-.furnish-btn:hover { border-color: var(--primary); color: var(--primary); }
-.furnish-btn--active { border-color: var(--primary); background: #ede9fe; color: var(--primary); }
+.furnish-btn:hover      { border-color: var(--primary); color: var(--primary); }
+.furnish-btn--active    { border-color: var(--primary); background: #ede9fe; color: var(--primary); }
 
 .error-border { border-color: var(--danger) !important; }
 
 /* ── Result card ── */
 .result-card { padding: 40px; }
-.result-card__header { text-align: center; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-.result-card__icon  { font-size: 56px; display: block; margin-bottom: 12px; }
-.result-card__label { font-size: 14px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+.result-card__header {
+  text-align: center; padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.result-card__icon  { font-size: 52px; display: block; margin-bottom: 10px; }
+.result-card__label {
+  font-size: 13px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .5px;
+}
 .result-card__price {
-  font-size: clamp(32px, 5vw, 52px); font-weight: 800; margin-top: 8px;
+  font-size: clamp(28px, 6vw, 52px); font-weight: 800; margin-top: 8px;
   background: linear-gradient(135deg, var(--primary), var(--accent));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.result-card__summary { margin-top: 28px; }
-.result-card__summary h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.result-card__summary { margin-top: 24px; }
+.result-card__summary h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 
 .summary-item {
   background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 14px 16px;
-  display: flex; flex-direction: column; gap: 4px;
+  border-radius: var(--radius-sm); padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 3px;
 }
-.summary-item__key { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
-.summary-item__val { font-size: 15px; font-weight: 700; color: var(--text); }
+.summary-item__key {
+  font-size: 10px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.summary-item__val { font-size: 14px; font-weight: 700; color: var(--text); }
 
-@media (max-width: 600px) {
-  .predict-form { padding: 24px 16px; }
-  .result-card  { padding: 24px 16px; }
+/* ── Tablet (≤ 768px) ── */
+@media (max-width: 768px) {
+  .predict-form { padding: 28px 24px; gap: 28px; }
+  .result-card  { padding: 28px 24px; }
+}
+
+/* ── Mobile (≤ 480px) ── */
+@media (max-width: 480px) {
+  .predict-form { padding: 20px 16px; gap: 24px; }
+  .result-card  { padding: 20px 16px; }
+
+  /* Stack form grid to single column on small phones */
+  .predict-form .grid-2 { grid-template-columns: 1fr; }
+
+  .furnish-group { flex-direction: column; }
+  .furnish-btn   { min-width: unset; width: 100%; }
+
+  .result-card__price { font-size: 28px; }
 }

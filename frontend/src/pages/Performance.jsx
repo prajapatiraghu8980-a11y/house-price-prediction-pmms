@@ -13,7 +13,7 @@ export default function Performance() {
   useEffect(() => {
     fetchMetrics()
       .then(setMetrics)
-      .catch(() => setError('Could not load metrics. Make sure the backend is running on port 5000.'))
+      .catch(() => setError('Could not load metrics. Make sure the backend is running on port 5001.'))
   }, [])
 
   if (error) return (
@@ -34,11 +34,13 @@ export default function Performance() {
   )
 
   const metricCards = [
-    { label: 'MAE',       value: metrics.mae.toLocaleString('en-IN'),  desc: 'Mean Absolute Error',       color: '#4f46e5', icon: '📉' },
-    { label: 'MSE',       value: metrics.mse.toLocaleString('en-IN'),  desc: 'Mean Squared Error',        color: '#06b6d4', icon: '📊' },
-    { label: 'RMSE',      value: metrics.rmse.toLocaleString('en-IN'), desc: 'Root Mean Squared Error',   color: '#10b981', icon: '📐' },
-    { label: 'R² Score',  value: metrics.r2,                           desc: 'Coefficient of Determination', color: '#f59e0b', icon: '🎯' },
+    { label: 'MAE',      value: metrics.mae.toLocaleString('en-IN'),  desc: 'Mean Absolute Error',          color: '#4f46e5', icon: '📉' },
+    { label: 'MSE',      value: metrics.mse.toLocaleString('en-IN'),  desc: 'Mean Squared Error',           color: '#06b6d4', icon: '📊' },
+    { label: 'RMSE',     value: metrics.rmse.toLocaleString('en-IN'), desc: 'Root Mean Squared Error',      color: '#10b981', icon: '📐' },
+    { label: 'R² Score', value: metrics.r2,                           desc: 'Coefficient of Determination', color: '#f59e0b', icon: '🎯' },
   ]
+
+  const maxCoef = Math.max(...metrics.coefficients.map(r => Math.abs(r.coefficient)))
 
   return (
     <div className="perf-page">
@@ -65,28 +67,24 @@ export default function Performance() {
         </div>
 
         {/* ── Intercept ── */}
-        <div className="intercept-card card fade-up" style={{ marginTop: 32 }}>
+        <div className="intercept-card card fade-up" style={{ marginTop: 24 }}>
           <span className="intercept-card__icon">⚓</span>
           <div>
             <p className="metric-card__label">Model Intercept</p>
             <p className="metric-card__value" style={{ color: 'var(--primary)' }}>
               {metrics.intercept.toLocaleString('en-IN')}
             </p>
-            <p className="metric-card__desc">
-              The baseline price when all feature values are zero.
-            </p>
+            <p className="metric-card__desc">Baseline price when all feature values are zero.</p>
           </div>
         </div>
 
-        {/* ── Coefficients chart ── */}
-        <div className="card fade-up" style={{ marginTop: 32, padding: '32px' }}>
-          <h2 className="form-section__title" style={{ borderBottom: '1px solid var(--border)', paddingBottom: 12, marginBottom: 24 }}>
-            📈 Feature Coefficients
-          </h2>
-          <ResponsiveContainer width="100%" height={320}>
-            <BarChart data={metrics.coefficients} margin={{ top: 0, right: 16, left: 16, bottom: 80 }}>
-              <XAxis dataKey="feature" angle={-35} textAnchor="end" tick={{ fontSize: 11 }} interval={0} />
-              <YAxis tick={{ fontSize: 12 }} />
+        {/* ── Coefficients bar chart ── */}
+        <div className="chart-card card fade-up" style={{ marginTop: 24 }}>
+          <h2 className="chart-title">📈 Feature Coefficients</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={metrics.coefficients} margin={{ top: 0, right: 8, left: 8, bottom: 90 }}>
+              <XAxis dataKey="feature" angle={-40} textAnchor="end" tick={{ fontSize: 10 }} interval={0} />
+              <YAxis tick={{ fontSize: 11 }} width={70} />
               <Tooltip formatter={(v) => v.toLocaleString('en-IN')} />
               <Bar dataKey="coefficient" radius={[4,4,0,0]}>
                 {metrics.coefficients.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
@@ -95,39 +93,42 @@ export default function Performance() {
           </ResponsiveContainer>
         </div>
 
-        {/* ── Coefficients table ── */}
-        <div className="card fade-up" style={{ marginTop: 32, overflow: 'hidden' }}>
-          <table className="coef-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Feature</th>
-                <th>Coefficient</th>
-                <th>Impact</th>
-              </tr>
-            </thead>
-            <tbody>
-              {metrics.coefficients.map((row, i) => (
-                <tr key={row.feature}>
-                  <td className="coef-table__num">{i + 1}</td>
-                  <td className="coef-table__feat">{row.feature}</td>
-                  <td className="coef-table__val" style={{ color: row.coefficient >= 0 ? 'var(--success)' : 'var(--danger)' }}>
-                    {row.coefficient >= 0 ? '+' : ''}{row.coefficient.toLocaleString('en-IN')}
-                  </td>
-                  <td>
-                    <div className="coef-bar-wrap">
-                      <div className="coef-bar"
-                        style={{
-                          width: `${Math.min(100, Math.abs(row.coefficient) / Math.max(...metrics.coefficients.map(r => Math.abs(r.coefficient))) * 100)}%`,
-                          background: row.coefficient >= 0 ? 'var(--success)' : 'var(--danger)'
-                        }}
-                      />
-                    </div>
-                  </td>
+        {/* ── Coefficients table (scrollable on mobile) ── */}
+        <div className="card fade-up" style={{ marginTop: 24, overflow: 'hidden' }}>
+          <div className="table-wrap">
+            <table className="coef-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Feature</th>
+                  <th>Coefficient</th>
+                  <th>Impact</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {metrics.coefficients.map((row, i) => (
+                  <tr key={row.feature}>
+                    <td className="coef-table__num">{i + 1}</td>
+                    <td className="coef-table__feat">{row.feature}</td>
+                    <td className="coef-table__val"
+                      style={{ color: row.coefficient >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+                      {row.coefficient >= 0 ? '+' : ''}{row.coefficient.toLocaleString('en-IN')}
+                    </td>
+                    <td>
+                      <div className="coef-bar-wrap">
+                        <div className="coef-bar"
+                          style={{
+                            width: `${Math.min(100, Math.abs(row.coefficient) / maxCoef * 100)}%`,
+                            background: row.coefficient >= 0 ? 'var(--success)' : 'var(--danger)'
+                          }}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
       </div>
