@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify
@@ -7,10 +8,11 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Allow all origins (Vercel frontend → Render backend)
 
 # ── Exact same preprocessing as house_price.py ──────────────────────────────
-data = pd.read_csv("Housing.csv")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+data = pd.read_csv(os.path.join(BASE_DIR, "Housing.csv"))
 data_2 = data.copy()
 
 for col in ["mainroad", "guestroom", "basement", "hotwaterheating", "airconditioning", "prefarea"]:
@@ -62,4 +64,5 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port)
